@@ -3,10 +3,21 @@ package shapes
 import "testing"
 
 func TestArea(t *testing.T) {
-	want := 100.0
-	got := Area(10.0, 10.0)
 
-	if got != want {
-		t.Errorf("got %.2f want %.2f", got, want)
+	testTable := []struct {
+		shape Shape
+		want  float64
+	}{
+		{Rectangle{12, 6}, 72.0},
+		{Circle{10}, 314.1592653589793},
 	}
+
+	for _, tt := range testTable {
+		got := tt.shape.Area()
+
+		if got != tt.want {
+			t.Errorf("got %.2f want %.2f", got, tt.want)
+		}
+	}
+
 }
