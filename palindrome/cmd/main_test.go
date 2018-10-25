@@ -6,20 +6,20 @@ func TestArgsCheck(t *testing.T) {
 	argsTable := []struct {
 		input  []string
 		output string
-		//err    error
+		err    error
 	}{
-		{input: []string{"foo"}, output: "foo"},
-		{input: []string{}, output: ""},
-		{input: []string{"foo", "bar"}, output: ""},
+		{input: []string{"foo"}, output: "foo", err: nil},
+		{input: []string{}, output: "", err: noArgumentsError},
+		{input: []string{"foo", "bar"}, output: "", err: invalidArgumentsError},
 	}
 
 	for _, tt := range argsTable {
-		result := ArgsCheck(tt.input)
+		result, err := ArgsCheck(tt.input)
 
-		if result != tt.output {
+		if result != tt.output || err != tt.err {
 			t.Error(
-				"Want:", tt.output,
-				"Got:", result,
+				"Want:", tt.output, tt.err,
+				"Got:", result, err,
 			)
 		}
 	}
