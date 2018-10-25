@@ -2,8 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
-	"os"
 )
 
 var (
@@ -17,16 +15,14 @@ func main() {
 
 }
 
-func ArgsCheck(input []string) string {
+func ArgsCheck(input []string) (string, error) {
 	switch {
 	case len(input) == 0:
-		fmt.Println("no args")
-		os.Exit(1)
+		return "", noArgumentsError
+		//os.Exit(1)
 	case len(input) > 1:
-		fmt.Println("too many args")
-		os.Exit(1)
-		// default:
-		// 	return input[0]
+		return "", invalidArgumentsError
+		//os.Exit(1)
 	}
-	return input[0]
+	return input[0], nil
 }
