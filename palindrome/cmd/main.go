@@ -2,6 +2,9 @@ package main
 
 import (
 	"errors"
+	"os"
+
+	"github.com/atxrich/learning_golang/palindrome"
 )
 
 var (
@@ -11,18 +14,22 @@ var (
 
 func main() {
 
-	// palindrome.PalindromeCheck(os.Args)
+	word, err := ArgsCheck(os.Args)
+
+	if err != nil {
+		os.Exit(1)
+	}
+
+	palindrome.PalindromeCheck(word)
 
 }
 
 func ArgsCheck(input []string) (string, error) {
-	switch {
-	case len(input) == 0:
+	if len(input) == 0 {
 		return "", noArgumentsError
-		//os.Exit(1)
-	case len(input) > 1:
+	} else if len(input) > 1 {
 		return "", invalidArgumentsError
-		//os.Exit(1)
 	}
+
 	return input[0], nil
 }
