@@ -12,6 +12,8 @@ func TestPalindromeCheck(t *testing.T) {
 		{"madam", true},
 		{"racecar", true},
 		{"frog", false},
+		{"121", true},
+		{"1", true},
 	}
 
 	for _, tt := range inputTable {
