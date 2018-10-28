@@ -2,34 +2,36 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"os"
 
 	"github.com/atxrich/learning_golang/palindrome"
 )
 
 var (
-	noArgumentsError      = errors.New("You must provide one string argument (with no spaces)")
-	invalidArgumentsError = errors.New("Too many arguments. Please enter a string with no spaces")
+	noArgumentsError = errors.New("You must provide one string argument (with no spaces)")
+	//invalidArgumentsError = errors.New("Invalid argument. Please enter a string with no spaces")
 )
 
 func main() {
-
-	word, err := ArgsCheck(os.Args)
+	err := ValidArgs(os.Args)
 
 	if err != nil {
-		os.Exit(1)
+		fmt.Println(noArgumentsError)
 	}
 
-	palindrome.PalindromeCheck(word)
+	if palindrome.PalindromeCheck(os.Args[1]) {
+		fmt.Printf("'%s' is a palindrome!\n", os.Args[1])
+	} else {
+		fmt.Println("Sorry, not a palindrome!")
+	}
 
 }
 
-func ArgsCheck(input []string) (string, error) {
-	if len(input) == 0 {
-		return "", noArgumentsError
-	} else if len(input) > 1 {
-		return "", invalidArgumentsError
+func ValidArgs(args []string) error {
+	if len(args) > 1 {
+		return nil
 	}
 
-	return input[0], nil
+	return noArgumentsError
 }

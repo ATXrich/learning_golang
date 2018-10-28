@@ -2,24 +2,24 @@ package main
 
 import "testing"
 
-func TestArgsCheck(t *testing.T) {
+func TestValidArgs(t *testing.T) {
 	argsTable := []struct {
+		name   string
 		input  []string
-		output string
-		err    error
+		output error
 	}{
-		{input: []string{"foo"}, output: "foo", err: nil},
-		{input: []string{}, output: "", err: noArgumentsError},
-		{input: []string{"foo", "bar"}, output: "", err: invalidArgumentsError},
+		{name: "no arguments", input: []string{"prog_name"}, output: noArgumentsError},
+		{name: "valid arguments", input: []string{"foo", "bar"}, output: nil},
 	}
 
 	for _, tt := range argsTable {
-		result, err := ArgsCheck(tt.input)
+		result := ValidArgs(tt.input)
 
-		if result != tt.output || err != tt.err {
+		if result != tt.output {
 			t.Error(
-				"Want:", tt.output, tt.err,
-				"Got:", result, err,
+				"For", tt.name,
+				"Expected", tt.output,
+				"Got", result,
 			)
 		}
 	}
